@@ -41,6 +41,7 @@ def mainPage() {
 			input "myMotion", "capability.motionSensor", title: "Motion Sensors Active", required: false, multiple: true
 			input "myContact", "capability.contactSensor", title: "Contact Sensors Opening", required: false, multiple: true
             input "mySwitch", "capability.switch", title: "Switches Turning On", required: false, multiple: true
+            input "myAlarm", "capability.alarm", title: "Alarm Activated", required: false, multiple: true
             paragraph "Note: Only the Active/Open/On events will send a trigger.  Motion stopping, Contacts closing, and Switches turning off will not send a trigger."
 		}
         section("") {
@@ -68,6 +69,9 @@ def subscribeToEvents() {
 	subscribe(myMotion, "motion.active", eventHandlerBinary)
 	subscribe(myContact, "contact.open", eventHandlerBinary)
     subscribe(mySwitch, "switch.on", eventHandlerBinary)
+    subscribe(myAlarm, "alarm.strobe", eventHandlerBinary)
+    subscribe(myAlarm, "alarm.siren", eventHandlerBinary)
+    subscribe(myAlarm, "alarm.both", eventHandlerBinary)
 }
 
 def eventHandlerBinary(evt) {
